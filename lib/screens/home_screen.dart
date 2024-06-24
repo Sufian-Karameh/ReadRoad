@@ -16,7 +16,7 @@ import '../firebase/utils.dart';
 
 var icon;
 
-class GetComments extends StatefulWidget {
+class GetComments extends StatefulWidget{
 
   final String postId;
 
