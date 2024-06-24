@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "794890630444",
+    "project_id": "fullstacktrial-92e4d",
+    "storage_bucket": "fullstacktrial-92e4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794890630444:android:79088a58b088eed2936889",
+        "android_client_info": {
+          "package_name": "com.example.workshop_project_template"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgwy4XaQjnp8yB10PQOErx2RKSqyulnnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
