@@ -226,7 +226,7 @@ class GetPost extends StatefulWidget {
   final String username;
   final String book;
    final String text;
-   final String authour;
+   final String author;
    final int num;
    final int rate;
    final int likes;
@@ -240,7 +240,7 @@ class GetPost extends StatefulWidget {
     required this.username,
     required this.book,
     required this.text,
-    required this.authour,
+    required this.author,
     required this.num,
     required this.rate,
     required this.likes,
@@ -319,7 +319,7 @@ Future<int> intitLikes (String postId) async{
   }
 }
 
-  Widget getSinglePostWidget(String username,String book, String text,String authour,int num,int rate, int likes,String genre,String postId) {
+  Widget getSinglePostWidget(String username,String book, String text,String author,int num,int rate, int likes,String genre,String postId) {
     
     // TODO - (Optional) You can use this function to implement the design of a single post.
     return Container(
@@ -383,7 +383,7 @@ Future<int> intitLikes (String postId) async{
                 AssetImage("lib/Icons/author.png"),
                 size: 50,color: Colors.black,),
                       title: Text("Author",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: ReadMoreText(username,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
+                      subtitle: ReadMoreText(author,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
                                                      trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color : Color.fromARGB(255, 129, 114, 91)),) ,
 
                       
@@ -580,7 +580,7 @@ void initState() {
   }
 @override
   Widget build(BuildContext context) {
-    return getSinglePostWidget(widget.username, widget.book, widget.text, widget.authour, widget.num, widget.rate, widget.likes, widget.genre, widget.postId);
+    return getSinglePostWidget(widget.username, widget.book, widget.text, widget.author, widget.num, widget.rate, widget.likes, widget.genre, widget.postId);
   }
 }
 
@@ -885,7 +885,7 @@ Widget getDrawerHead(){
       itemCount: docList.length,
       itemBuilder: (BuildContext context, int index) {
         
-          return GetPost(username: docList[index]["postData"]['username'],book: docList[index]["postData"]['book']!,text:  docList[index]["postData"]['text']!,authour: docList[index]["postData"]['author']!,num: docList[index]["postData"]["icon"],rate: docList[index]["postData"]['rate'],likes: docList[index]["postData"]['likes'],genre: docList[index]["postData"]['genre'],postId: docList[index]["postId"]);
+          return GetPost(username: docList[index]["postData"]['username'],book: docList[index]["postData"]['book']!,text:  docList[index]["postData"]['text']!,author: docList[index]["postData"]['author']!,num: docList[index]["postData"]["icon"],rate: docList[index]["postData"]['rate'],likes: docList[index]["postData"]['likes'],genre: docList[index]["postData"]['genre'],postId: docList[index]["postId"]);
       },
     );
   },
