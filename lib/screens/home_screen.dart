@@ -731,41 +731,21 @@ enum SortType {
 }
 
 
+
 class AdjustableScrollController extends ScrollController {
-  final int extraScrollSpeed;
-
-  AdjustableScrollController([this.extraScrollSpeed = 40]);
-
-  @override
-  void attach(ScrollPosition position) {
-    super.attach(position);
-    addListener(_onScroll);
-  }
-
-  @override
-  void detach(ScrollPosition position) {
-    removeListener(_onScroll);
-    super.detach(position);
-  }
-
-  void _onScroll() {
-    if (!hasClients) return;
-
-    ScrollDirection scrollDirection = position.userScrollDirection;
-    if (scrollDirection == ScrollDirection.idle) return;
-
-    double scrollEnd = offset +
-        (scrollDirection == ScrollDirection.reverse
-            ? extraScrollSpeed
-            : -extraScrollSpeed);
-
-    scrollEnd = min(position.maxScrollExtent, max(position.minScrollExtent, scrollEnd));
-
-    animateTo(
-      scrollEnd,
-      duration: Duration(milliseconds: 100),
-      curve: Curves.easeOut,
-    );
+  AdjustableScrollController([int extraScrollSpeed = 40]) {
+    super.addListener(() {
+      ScrollDirection scrollDirection = super.position.userScrollDirection;
+      if (scrollDirection != ScrollDirection.idle) {
+        double scrollEnd = super.offset +
+            (scrollDirection == ScrollDirection.reverse
+                ? extraScrollSpeed
+                : -extraScrollSpeed);
+        scrollEnd = min(super.position.maxScrollExtent,
+            max(super.position.minScrollExtent, scrollEnd));
+        jumpTo(scrollEnd);
+      }
+    });
   }
 }
 
@@ -1049,7 +1029,7 @@ Widget getDrawerHead(){
    
     List docList = snapshot.data!;
     return ListView.builder(
-     //controller: AdjustableScrollController(100) ,
+     controller: AdjustableScrollController(40) ,
       itemCount: docList.length,
       //key: UniqueKey(),
       itemBuilder: (BuildContext context, int index) {
