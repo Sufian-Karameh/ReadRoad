@@ -33,9 +33,7 @@ class _GetCommentsState extends State<GetComments> {
   //IconData postLikeIcon;
    var comments ={"username": "" ,"text": "", "icon": -1,"time": 0};
    bool IsCommentEmpty(){
-    setState(() {
-      
-    });
+   
     return comment.text.isEmpty;
    }
 
@@ -101,35 +99,27 @@ Widget getCommentWidget (String username,String text,int iconNum){
               border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.circular(10.0), // Set the radius here
             ),
-   child: Row(
-  children: [
-    //SizedBox(width: 40),
-    Expanded(
-      child: Container( // Adding a Container to provide constraints
-        constraints: BoxConstraints(minWidth: 0, maxWidth: double.infinity),
-        child: ListTile(
-          leading:  ImageIcon(
-            AssetImage("lib/Icons/$iconNum.png"),
-            size: 50,
-          ),
-          title: Text(
-            username,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          subtitle: ReadMoreText(
-            text,
-            textAlign: TextAlign.start,
-            trimLines: 3,
-            trimMode: TrimMode.Line,
-            trimCollapsedText: '...Read more',
-            trimExpandedText: ' Read less',
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-      ),
-    ),
-  ],
-),
+   child: Expanded(
+     child: ListTile(
+       leading:  ImageIcon(
+         AssetImage("lib/Icons/$iconNum.png"),
+         size: 50,
+       ),
+       title: Text(
+         username,
+         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+       ),
+       subtitle: ReadMoreText(
+         text,
+         textAlign: TextAlign.start,
+         trimLines: 3,
+         trimMode: TrimMode.Line,
+         trimCollapsedText: '...Read more',
+         trimExpandedText: ' Read less',
+         style: TextStyle(fontSize: 20),
+       ),
+     ),
+   ),
 
  );
 }
@@ -237,7 +227,7 @@ class GetPost extends StatefulWidget {
 
    const GetPost({
     Key? key,
-    required this.username,
+    required  this.username,
     required this.book,
     required this.text,
     required this.author,
@@ -266,6 +256,7 @@ class _GetPostState extends State<GetPost> {
 
   SortType sortBy=SortType.timeDescending;
  var _iconFuture;
+ 
 
 
    void updateLikes(String postId)async{
@@ -323,14 +314,145 @@ Future<int> intitLikes (String postId) async{
     
     // TODO - (Optional) You can use this function to implement the design of a single post.
     return Container(
-      
+      //height: 500,
       margin: const EdgeInsets.only( top: 15,left:80,right:80),
       padding:const EdgeInsets.only( top:10.0,bottom: 10,left:80,right:80), 
       decoration: BoxDecoration(
               color: Color.fromARGB(255, 219, 216, 212),
-              borderRadius: BorderRadius.circular(00.0), // Set the radius here
+              borderRadius: BorderRadius.circular(20.0), // Set the radius here
             ),
-      child: Column(
+      child: /*Table(
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          TableRow(
+            //decoration: BoxDecoration(),
+            children: [
+              Row(
+                
+                  children: [
+                    IconButton(
+                                    onPressed:
+                    ()=>setState(() {
+                          {hidden ? hidden=false : hidden=true;}}),
+                                    icon: getThoughtIcon(hidden)
+                                  ),
+                SizedBox(width:10),
+               ImageIcon(
+                AssetImage("lib/Icons/$num.png"),
+                size: 50),
+                SizedBox(width: 20,),
+                  Expanded(child:  Text(username,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,)),
+                            ]
+                          ),
+
+            ]
+          ),
+          TableRow(
+            children: [
+              Divider(
+                            thickness: 5, 
+                          ),
+            ]
+          ),
+          TableRow(
+            children: [
+               getBookDetails(book, author,  genre),
+            ]
+          ),
+          TableRow(
+            children: [
+              Divider(
+                            thickness: 5, 
+                          ),
+            ]
+
+          ),
+          TableRow(children: [
+            getPostText(text,rate),
+          ]),
+          TableRow(children: [SizedBox(height: 20,)]),
+          TableRow(
+            children:[
+              Padding(
+                  padding: const EdgeInsets.only(left:300,right:150),
+                  child: Row(
+                  
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      
+                      Expanded(
+                        child: ListTile(
+                          leading: // Get the IconData from the snapshot
+      IconButton(
+        onPressed: isUserSignedIn() ? ()=> setState(() {
+          likeUpdated=true;
+          if (likePressed) {likePressed=false;
+          likes1--;
+          }
+          else{ likePressed=true;
+          likes1++;}
+          updateLikes(postId);}) : null,
+            //icon = iconData; // Toggle the value of bookPressed
+            //updateLikes(postId);})
+
+           
+         
+
+icon: !isUserSignedIn() ? Icon(Icons.thumb_up_alt_outlined,size :40): !likeUpdated?
+ FutureBuilder<IconData>(
+  //key: UniqueKey(),
+  future: _iconFuture,
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40) ; 
+    } else if (snapshot.hasError) {
+       return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
+    } else {
+      IconData iconData = snapshot.data!;
+    
+        return Icon(
+          iconData, // Use the iconData retrieved from the future
+          size: 40,
+        );}
+      }
+ ) : likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40),),
+title: !isUserSignedIn() ? Text("$likes Likes"): 
+FutureBuilder<IconData>(
+  future: _iconFuture,
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Text("... Likes") ; 
+    } else if (snapshot.hasError) {
+       return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
+    } else {
+  return Text("$likes1 Likes");
+  }}
+                          
+                        ),
+                      ),),
+                      
+                      Expanded(
+                        child: ListTile(
+                          leading:  IconButton(onPressed: isUserSignedIn() ? ()=>setState(() {
+                          {commentOn ? commentOn=false : commentOn=true;}
+                                            }):null, icon:Icon( Icons.comment,size:40)),
+                          title: Text("Comments"),
+                        ),
+                      ),
+                    
+                    
+                  
+                  
+                    ],
+                  ),
+                ),
+            ]
+          )
+        ],
+      )*/
+      
+      
+      Column(
         children: [
           
                 Row(
@@ -347,7 +469,7 @@ Future<int> intitLikes (String postId) async{
                 AssetImage("lib/Icons/$num.png"),
                 size: 50),
                 SizedBox(width: 20,),
-                  Expanded(child: Text(username,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,)),
+                  Expanded(child:  Text(username,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,)),
                             ]
                           ),
                           Divider(
@@ -355,103 +477,13 @@ Future<int> intitLikes (String postId) async{
                           ),
 
                 
-                Row( 
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-
-                    
-                  SizedBox(width:55),
-
-                  Expanded(
-                    child: ListTile(
-                      leading: ImageIcon(
-                AssetImage("lib/Icons/book.png"),
-                size: 50,color: Colors.black,),
-                      title: Text("Book name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: ReadMoreText(book,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
-                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
-
-                      
-                          
-                    ),
-                  ),
-
-
-                  Expanded(
-                    child: ListTile(
-                      leading: ImageIcon(
-                AssetImage("lib/Icons/author.png"),
-                size: 50,color: Colors.black,),
-                      title: Text("Author",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: ReadMoreText(author,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
-                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color : Color.fromARGB(255, 129, 114, 91)),) ,
-
-                      
-                          
-                    ),
-                  ),
-
-
-                  Expanded(
-                    child: ListTile(
-                      leading: ImageIcon(
-                AssetImage("lib/Icons/genres.png"),
-                size: 50,color: Colors.black,),
-                      title: Text("Genre",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: ReadMoreText(genre,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
-                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
-
-                      
-                          
-                    ),
-                  ),
-
-                     IconButton(onPressed: ()=>setState(() {
-                    {addedBook ? addedBook=false : addedBook=true;}
-                  }), icon:getAddedIcon(addedBook)),
-                      ]),
+                getBookDetails(book, author,  genre),
                        Divider(
                             thickness: 5, 
                           ),
 
                    
-                    Row(
-                      children: [
-                        SizedBox(width: 55,),
-
-
-                         Expanded(
-                    child: ListTile(
-                      leading: ImageIcon(
-                         AssetImage("lib/Icons/post.png"),
-                         size: 50,
-                         color: Colors.black,),
-                      title: Container(
-                        alignment: Alignment.topLeft,
-                        child: ImageIcon(
-                                            AssetImage("lib/Icons/${rate}Star.png"),
-                                            size:65,color: Colors.black,),
-                      ),
-                      subtitle: ReadMoreText( hidden ? "Hidden" :text,textAlign: TextAlign.start, trimLines: 2,trimMode: TrimMode.Line,trimCollapsedText: '...Read more',
-                        trimExpandedText: ' Read less',style: TextStyle(fontSize: 20),)
-
-                      
-                          
-                    ),
-                  ),
-
-
-                        SizedBox(width: 65,),
-                         
-                        SizedBox(width: 20,),
-                        
-                      ],
-
-      
-
-
-
-                    ),
+                   getPostText(text,rate),
                 SizedBox(height: 20,),
                 Padding(
                   padding: const EdgeInsets.only(left:300,right:150),
@@ -496,11 +528,12 @@ icon: !isUserSignedIn() ? Icon(Icons.thumb_up_alt_outlined,size :40): !likeUpdat
         );}
       }
  ) : likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40),),
-title: !isUserSignedIn() ? Text("$likes Likes"):  FutureBuilder<IconData>(
+title: !isUserSignedIn() ? Text("$likes Likes"): 
+FutureBuilder<IconData>(
   future: _iconFuture,
   builder: (context, snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
-      return Text("  Likes") ; 
+      return Text("... Likes") ; 
     } else if (snapshot.hasError) {
        return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
     } else {
@@ -567,14 +600,111 @@ title: !isUserSignedIn() ? Text("$likes Likes"):  FutureBuilder<IconData>(
   }
 
  
+Widget getPostText(String text,int rate){
+  return  Row(
+                      children: [
+                        SizedBox(width: 55,),
 
 
-  
+                         Expanded(
+                    child: ListTile(
+                      leading: ImageIcon(
+                         AssetImage("lib/Icons/post.png"),
+                         size: 50,
+                         color: Colors.black,),
+                      title: Container(
+                        alignment: Alignment.topLeft,
+                        child: ImageIcon(
+                                            AssetImage("lib/Icons/${rate}Star.png"),
+                                            size:65,color: Colors.black,),
+                      ),
+                      subtitle: ReadMoreText( hidden ? "Hidden" :text,textAlign: TextAlign.start, trimLines: 2,trimMode: TrimMode.Line,trimCollapsedText: '...Read more',
+                        trimExpandedText: ' Read less',style: TextStyle(fontSize: 20),)
+
+                      
+                          
+                    ),
+                  ),
+
+
+                        SizedBox(width: 65,),
+                         
+                        SizedBox(width: 20,),
+                        
+                      ],
+
+      
+
+
+
+                    );
+}
+
+Widget getBookDetails(String book, String author, String genre){
+  return Row( 
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+
+                    
+                  SizedBox(width:55),
+
+                  Expanded(
+                    child: ListTile(
+                      leading: ImageIcon(
+                AssetImage("lib/Icons/book.png"),
+                size: 50,color: Colors.black,),
+                      title: Text("Book name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                      subtitle: ReadMoreText(book,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
+                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
+
+                      
+                          
+                    ),
+                  ),
+
+
+                  Expanded(
+                    child: ListTile(
+                      leading: ImageIcon(
+                AssetImage("lib/Icons/author.png"),
+                size: 50,color: Colors.black,),
+                      title: Text("Author",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                      subtitle: ReadMoreText(author,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
+                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color : Color.fromARGB(255, 129, 114, 91)),) ,
+
+                      
+                          
+                    ),
+                  ),
+
+
+                  Expanded(
+                    child: ListTile(
+                      leading: ImageIcon(
+                AssetImage("lib/Icons/genres.png"),
+                size: 50,color: Colors.black,),
+                      title: Text("Genre",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                      subtitle: ReadMoreText(genre,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
+                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
+
+                      
+                          
+                    ),
+                  ),
+
+                     IconButton(onPressed: ()=>setState(() {
+                    {addedBook ? addedBook=false : addedBook=true;}
+                  }), icon:getAddedIcon(addedBook)),
+                      ]);
+}
+
+
 @override
 void initState() {
     super.initState(); 
      // Always call super.initState() to ensure any parent class initialization logic is executed
      if (isUserSignedIn()){_iconFuture = getFavouriteIcon1(widget.postId);}
+     
      //likes1 =intitLikes(widget.postId);
     
   }
@@ -601,6 +731,43 @@ enum SortType {
 }
 
 
+class AdjustableScrollController extends ScrollController {
+  final int extraScrollSpeed;
+
+  AdjustableScrollController([this.extraScrollSpeed = 40]);
+
+  @override
+  void attach(ScrollPosition position) {
+    super.attach(position);
+    addListener(_onScroll);
+  }
+
+  @override
+  void detach(ScrollPosition position) {
+    removeListener(_onScroll);
+    super.detach(position);
+  }
+
+  void _onScroll() {
+    if (!hasClients) return;
+
+    ScrollDirection scrollDirection = position.userScrollDirection;
+    if (scrollDirection == ScrollDirection.idle) return;
+
+    double scrollEnd = offset +
+        (scrollDirection == ScrollDirection.reverse
+            ? extraScrollSpeed
+            : -extraScrollSpeed);
+
+    scrollEnd = min(position.maxScrollExtent, max(position.minScrollExtent, scrollEnd));
+
+    animateTo(
+      scrollEnd,
+      duration: Duration(milliseconds: 100),
+      curve: Curves.easeOut,
+    );
+  }
+}
 
 class _HomeScreenState extends State<HomeScreen> {
   
@@ -614,7 +781,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var icon;
   SortType sortBy=SortType.timeDescending;
   IconData postLikeIcon=Icons.thumb_up;
-   
+   var dbList;
 
 
 
@@ -869,7 +1036,7 @@ Widget getDrawerHead(){
 
     // If you want, you can use the `getSinglePostWidget()` to add the design a single post.
 
-
+ 
    return  FutureBuilder(
       future: getDbList(sortBy),
        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
@@ -882,10 +1049,13 @@ Widget getDrawerHead(){
    
     List docList = snapshot.data!;
     return ListView.builder(
+     //controller: AdjustableScrollController(100) ,
       itemCount: docList.length,
+      //key: UniqueKey(),
       itemBuilder: (BuildContext context, int index) {
         
-          return GetPost(username: docList[index]["postData"]['username'],book: docList[index]["postData"]['book']!,text:  docList[index]["postData"]['text']!,author: docList[index]["postData"]['author']!,num: docList[index]["postData"]["icon"],rate: docList[index]["postData"]['rate'],likes: docList[index]["postData"]['likes'],genre: docList[index]["postData"]['genre'],postId: docList[index]["postId"]);
+          return //Text("hhhhhhhhhh",style: TextStyle(fontSize: 500),);
+          GetPost(username: docList[index]["postData"]['username'],book: docList[index]["postData"]['book']!,text:  docList[index]["postData"]['text']!,author: docList[index]["postData"]['author']!,num: docList[index]["postData"]["icon"],rate: docList[index]["postData"]['rate'],likes: docList[index]["postData"]['likes'],genre: docList[index]["postData"]['genre'],postId: docList[index]["postId"]);
       },
     );
   },
@@ -897,21 +1067,6 @@ Widget getDrawerHead(){
         );
 
   }
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
 
   void logout() {
     print("Logging out");
