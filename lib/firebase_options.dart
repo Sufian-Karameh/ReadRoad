@@ -41,47 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBXME3DlI2sK8dalT3A_pfCQOOY3ORu8Oc',
-    appId: '1:794890630444:web:2a806c3462716b05936889',
-    messagingSenderId: '794890630444',
-    projectId: 'fullstacktrial-92e4d',
-    authDomain: 'fullstacktrial-92e4d.firebaseapp.com',
-    storageBucket: 'fullstacktrial-92e4d.appspot.com',
+    apiKey: 'AIzaSyBK5H2c99MWTullyeRzAzey6LhB1p9ZNSw',
+    appId: '1:48656043273:web:6aa33c66116f71c78857d8',
+    messagingSenderId: '48656043273',
+    projectId: 'readroadsufian',
+    authDomain: 'readroadsufian.firebaseapp.com',
+    storageBucket: 'readroadsufian.appspot.com',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAEvYLMNQ30HMTS8AHVDFpTdb5Qto3OW7M',
-    appId: '1:794890630444:ios:e11672601d8cc9a3936889',
-    messagingSenderId: '794890630444',
-    projectId: 'fullstacktrial-92e4d',
-    storageBucket: 'fullstacktrial-92e4d.appspot.com',
+    apiKey: 'AIzaSyBnF7RiNSUmlPRFBs6xdsNvtODr4coUOqw',
+    appId: '1:48656043273:ios:369eab563d5d909a8857d8',
+    messagingSenderId: '48656043273',
+    projectId: 'readroadsufian',
+    storageBucket: 'readroadsufian.appspot.com',
     iosBundleId: 'com.example.flutterApplication1',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAEvYLMNQ30HMTS8AHVDFpTdb5Qto3OW7M',
-    appId: '1:794890630444:ios:e11672601d8cc9a3936889',
-    messagingSenderId: '794890630444',
-    projectId: 'fullstacktrial-92e4d',
-    storageBucket: 'fullstacktrial-92e4d.appspot.com',
+    apiKey: 'AIzaSyBnF7RiNSUmlPRFBs6xdsNvtODr4coUOqw',
+    appId: '1:48656043273:ios:369eab563d5d909a8857d8',
+    messagingSenderId: '48656043273',
+    projectId: 'readroadsufian',
+    storageBucket: 'readroadsufian.appspot.com',
     iosBundleId: 'com.example.flutterApplication1',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAgwy4XaQjnp8yB10PQOErx2RKSqyulnnA',
-    appId: '1:794890630444:android:79088a58b088eed2936889',
-    messagingSenderId: '794890630444',
-    projectId: 'fullstacktrial-92e4d',
-    storageBucket: 'fullstacktrial-92e4d.appspot.com',
+    apiKey: 'AIzaSyD-cF8gCV0VshHnFzvTUGzRAAXF24MWeUQ',
+    appId: '1:48656043273:android:2607e2a052805c088857d8',
+    messagingSenderId: '48656043273',
+    projectId: 'readroadsufian',
+    storageBucket: 'readroadsufian.appspot.com',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBXME3DlI2sK8dalT3A_pfCQOOY3ORu8Oc',
-    appId: '1:794890630444:web:5832c0ad26006623936889',
-    messagingSenderId: '794890630444',
-    projectId: 'fullstacktrial-92e4d',
-    authDomain: 'fullstacktrial-92e4d.firebaseapp.com',
-    storageBucket: 'fullstacktrial-92e4d.appspot.com',
+    apiKey: 'AIzaSyBK5H2c99MWTullyeRzAzey6LhB1p9ZNSw',
+    appId: '1:48656043273:web:971ff6c3ade6f1a88857d8',
+    messagingSenderId: '48656043273',
+    projectId: 'readroadsufian',
+    authDomain: 'readroadsufian.firebaseapp.com',
+    storageBucket: 'readroadsufian.appspot.com',
   );
 
 }

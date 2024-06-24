@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "794890630444",
-    "project_id": "fullstacktrial-92e4d",
-    "storage_bucket": "fullstacktrial-92e4d.appspot.com"
+    "project_number": "48656043273",
+    "project_id": "readroadsufian",
+    "storage_bucket": "readroadsufian.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:794890630444:android:79088a58b088eed2936889",
+        "mobilesdk_app_id": "1:48656043273:android:2607e2a052805c088857d8",
         "android_client_info": {
           "package_name": "com.example.workshop_project_template"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAgwy4XaQjnp8yB10PQOErx2RKSqyulnnA"
+          "current_key": "AIzaSyD-cF8gCV0VshHnFzvTUGzRAAXF24MWeUQ"
         }
       ],
       "services": {

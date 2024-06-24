@@ -199,8 +199,9 @@ Widget getCommentWidget (String username,String text,int iconNum){
                       if (commentList!.isEmpty){
                         return Text("Be the First to add a Comment",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),);
                       }else {
-                        return  SizedBox(
-                              height: 600,
+                        return  Container(
+                          constraints: BoxConstraints(minHeight: 0, maxHeight: 300),
+                              //height: 600,
                         child:  getAllComments(postId,commentList),
                       );
                      
