@@ -1,4 +1,4 @@
-import 'dart:js_interop';
+//import 'dart:js_interop';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +13,7 @@ import 'package:readmore/readmore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../firebase/utils.dart';
+import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
 var icon;
 
@@ -101,10 +102,7 @@ Widget getCommentWidget (String username,String text,int iconNum){
             ),
    child: Expanded(
      child: ListTile(
-       leading:  ImageIcon(
-         AssetImage("lib/Icons/$iconNum.png"),
-         size: 50,
-       ),
+       leading: CircleAvatar(backgroundImage: AssetImage("lib/Icons/$iconNum.png"),radius: 25, ),
        title: Text(
          username,
          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -140,9 +138,7 @@ Widget getCommentWidget (String username,String text,int iconNum){
                       ),
                       Row(
                           children: [
-                            ImageIcon(
-                AssetImage("lib/Icons/$icon.png"),
-                size: 50),
+                           CircleAvatar(backgroundImage: AssetImage("lib/Icons/$icon.png"),radius: 30, ),
                 SizedBox(width: 30,),
                             //SizedBox(width:20),
                             Expanded(
@@ -299,7 +295,7 @@ Future<int> intitLikes (String postId) async{
   List likedPosts=List<String>.from(data!.data()!["liked"] ?? []);
   likes1= postData!.data()!["likes"]?? 0;
  
-  print("likes: jjjjdj$likes1");
+  
   if(likedPosts.contains(postId)){
    likePressed=true;
     return Icons.thumb_up;
@@ -315,10 +311,10 @@ Future<int> intitLikes (String postId) async{
     // TODO - (Optional) You can use this function to implement the design of a single post.
     return Container(
       //height: 500,
-      margin: const EdgeInsets.only( top: 15,left:80,right:80),
-      padding:const EdgeInsets.only( top:10.0,bottom: 10,left:80,right:80), 
+      margin: const EdgeInsets.only( top: 20,left:40,right:40),
+      padding:const EdgeInsets.only( top:10.0,bottom: 10,left:100,right:100), 
       decoration: BoxDecoration(
-              color: Color.fromARGB(255, 219, 216, 212),
+              color: Color.fromARGB(255, 228, 226, 225),
               borderRadius: BorderRadius.circular(20.0), // Set the radius here
             ),
       child: /*Table(
@@ -465,9 +461,7 @@ FutureBuilder<IconData>(
                                     icon: getThoughtIcon(hidden)
                                   ),
                 SizedBox(width:10),
-                ImageIcon(
-                AssetImage("lib/Icons/$num.png"),
-                size: 50),
+                CircleAvatar(backgroundImage: AssetImage("lib/Icons/$num.png"),radius: 30, ),
                 SizedBox(width: 20,),
                   Expanded(child:  Text(username,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,)),
                             ]
@@ -714,6 +708,7 @@ void initState() {
   }
 }
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -732,7 +727,7 @@ enum SortType {
 
 
 
-class AdjustableScrollController extends ScrollController {
+/*class AdjustableScrollController extends ScrollController {
   AdjustableScrollController([int extraScrollSpeed = 40]) {
     super.addListener(() {
       ScrollDirection scrollDirection = super.position.userScrollDirection;
@@ -747,7 +742,7 @@ class AdjustableScrollController extends ScrollController {
       }
     });
   }
-}
+}*/
 
 class _HomeScreenState extends State<HomeScreen> {
   
@@ -815,7 +810,31 @@ if (sortBy==SortType.lessRated){
 return docList;
 }
 
+// Controllers
+  final ScrollController _scrollController= ScrollController();
+/*
+  @override
+  void initState() {
+    super.initState();
+    // initialize scroll controllers
+    
 
+    
+  }*/
+void updateIcon()async{
+  final FirebaseFirestore db = FirebaseFirestore.instance;
+  var data =await db.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).get()!;
+  icon = data!.data()!["icon"];
+}
+@override
+void initState() {
+    super.initState(); 
+     // Always call super.initState() to ensure any parent class initialization logic is executed
+     if (isUserSignedIn()){ updateIcon();}
+     
+     //likes1 =intitLikes(widget.postId);
+    
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -955,7 +974,7 @@ Widget getDrawerHead(){
   return Container(decoration:BoxDecoration(color: Colors.blueGrey),height: 150,
           alignment: Alignment.center,
   
-          child: Container(height:100,width: 100, decoration:  BoxDecoration(shape: BoxShape.circle,color: Colors.black),),);
+          child: CircleAvatar(backgroundImage: AssetImage("lib/Icons/$icon.png"),radius: 50, ),);
 }
   Widget getDrawerList (){
 
@@ -964,6 +983,8 @@ Widget getDrawerHead(){
         ListTile(
           leading: Icon(Icons.person,size:40),
           title: Text("Profile",style: TextStyle(fontSize: 25),),
+          onTap:isUserSignedIn()? () => goToProfileScreen(context): null,
+
         ),
         Divider(
           thickness: 3,
@@ -1029,7 +1050,10 @@ Widget getDrawerHead(){
    
     List docList = snapshot.data!;
     return ListView.builder(
-     controller: AdjustableScrollController(40) ,
+       //physics: const AlwaysScrollableScrollPhysics(),
+       //physics: const NeverScrollableScrollPhysics(),
+       //keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
+       controller: _scrollController,
       itemCount: docList.length,
       //key: UniqueKey(),
       itemBuilder: (BuildContext context, int index) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workshop_project_template/screens/Profile.dart';
 
 
 import '../screens/add_post_screen.dart';
@@ -24,5 +25,9 @@ void goToAuthScreen(BuildContext context) {
   );
 }
 
-
+void goToProfileScreen(BuildContext context) {
+  Navigator.of(context).push(
+    MaterialPageRoute(builder: (context) => const Profile()),
+  );
+}
 

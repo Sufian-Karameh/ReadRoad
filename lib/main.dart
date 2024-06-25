@@ -8,7 +8,7 @@ import 'firebase_options.dart';
 
 
 
-
+import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
 
 // ...
@@ -19,7 +19,7 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  
+  //SmoothScrollWebPlugin.init();
   runApp(const MyApp());
 }
 

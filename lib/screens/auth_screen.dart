@@ -17,9 +17,8 @@ class _AuthScreenState extends State<AuthScreen> {
  bool selected=false;
  var selectedIcon;
 
-List iconList = [for (var i = 0; i < 23; i++) ImageIcon(
-                AssetImage("lib/Icons/$i.png"),
-                size: 50)];
+List iconList = [for (var i = 0; i < 23; i++) 
+                CircleAvatar(backgroundImage: AssetImage("lib/Icons/$i.png"),radius: 30, ),];
  
 
   bool isLoginMode = true;
