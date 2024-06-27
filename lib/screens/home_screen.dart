@@ -65,7 +65,7 @@ return commentsList;
       return Text("Error: ${snapshot.error}"); 
     }
    
-    //List docList = snapshot.data!;
+    List docList = snapshot.data!;
     return ListView.builder(
       itemCount: docList.length,
       itemBuilder: (BuildContext context, int index) {
