@@ -55,7 +55,7 @@ return commentsList;
   Widget getAllComments(String postId,List docList){
 
 
-    /*return  FutureBuilder(
+    return  FutureBuilder(
       future: GetCommentsDb(postId),
        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -63,7 +63,7 @@ return commentsList;
     }
     if (snapshot.hasError) {
       return Text("Error: ${snapshot.error}"); 
-    }*/
+    }
    
     //List docList = snapshot.data!;
     return ListView.builder(
@@ -72,7 +72,7 @@ return commentsList;
           return //Text("data");
           getCommentWidget (docList[index]["username"],docList[index]["text"],docList[index]["icon"]);
       },
-    );
+    );});
   
 
 
