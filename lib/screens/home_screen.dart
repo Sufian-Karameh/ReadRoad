@@ -55,7 +55,7 @@ return commentsList;
   Widget getAllComments(String postId,List docList){
 
 
-    return  FutureBuilder(
+    /*return  FutureBuilder(
       future: GetCommentsDb(postId),
        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -65,14 +65,14 @@ return commentsList;
       return Text("Error: ${snapshot.error}"); 
     }
    
-    List docList = snapshot.data!;
+    List docList = snapshot.data!;*/
     return ListView.builder(
       itemCount: docList.length,
       itemBuilder: (BuildContext context, int index) {
           return //Text("data");
           getCommentWidget (docList[index]["username"],docList[index]["text"],docList[index]["icon"]);
       },
-    );});
+    );
   
 
 
@@ -96,27 +96,31 @@ Widget getCommentWidget (String username,String text,int iconNum){
                   padding:const EdgeInsets.only( top:10.0,bottom: 10,left:30,right:30), 
                   decoration: BoxDecoration(
               color:Color.fromARGB(255, 243, 240, 236),
-              shape:BoxShape.values.first,
+              //shape:BoxShape.values.first,
               border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.circular(10.0), // Set the radius here
             ),
-   child: Expanded(
-     child: ListTile(
-       leading: CircleAvatar(backgroundImage: AssetImage("lib/Icons/$iconNum.png"),radius: 25, ),
-       title: Text(
-         username,
-         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+   child: Row(
+     children: [
+       Expanded(
+         child: ListTile(
+           leading: CircleAvatar(backgroundImage: AssetImage("lib/Icons/$iconNum.png"),radius: 25, ),
+           title: Text(
+             username,
+             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+           ),
+           subtitle: ReadMoreText(
+             text,
+             textAlign: TextAlign.start,
+             trimLines: 3,
+             trimMode: TrimMode.Line,
+             trimCollapsedText: '...Read more',
+             trimExpandedText: ' Read less',
+             style: TextStyle(fontSize: 20),
+           ),
+         ),
        ),
-       subtitle: ReadMoreText(
-         text,
-         textAlign: TextAlign.start,
-         trimLines: 3,
-         trimMode: TrimMode.Line,
-         trimCollapsedText: '...Read more',
-         trimExpandedText: ' Read less',
-         style: TextStyle(fontSize: 20),
-       ),
-     ),
+     ],
    ),
 
  );
@@ -1042,7 +1046,7 @@ Widget getDrawerHead(){
       future: getDbList(sortBy),
        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
-      return Text("Loading FFFFeeds...",style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold),);
+      return Text("Loading Feeds...",style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold),);
     }
     if (snapshot.hasError) {
       return Text("Error: ${snapshot.error}"); 
