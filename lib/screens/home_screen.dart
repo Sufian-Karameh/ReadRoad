@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:workshop_project_template/utils/mock_data.dart';
-import 'package:workshop_project_template/utils/utils.dart';
+import 'package:readroad_web_application/utils/mock_data.dart';
+import 'package:readroad_web_application/utils/utils.dart';
 import 'package:readmore/readmore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -578,7 +578,8 @@ FutureBuilder<IconData>(
               size: 40,);
     }
     else{
-      return ImageIcon(
+      return  
+       ImageIcon(
               AssetImage("lib/Icons/addedBook.png"),
               size: 40,);
     }

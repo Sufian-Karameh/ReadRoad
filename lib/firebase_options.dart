@@ -77,7 +77,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyBK5H2c99MWTullyeRzAzey6LhB1p9ZNSw',
-    appId: '1:48656043273:web:971ff6c3ade6f1a88857d8',
+    appId: '1:48656043273:web:30274f15916d29b38857d8',
     messagingSenderId: '48656043273',
     projectId: 'readroadsufian',
     authDomain: 'readroadsufian.firebaseapp.com',

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:workshop_project_template/utils/utils.dart';
+import 'package:readroad_web_application/utils/utils.dart';
 
 
 class AddPostScreen extends StatefulWidget {

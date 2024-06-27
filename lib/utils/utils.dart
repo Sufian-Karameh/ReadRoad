@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workshop_project_template/screens/Profile.dart';
+import 'package:readroad_web_application/screens/Profile.dart';
 
 
 import '../screens/add_post_screen.dart';
