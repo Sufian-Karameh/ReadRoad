@@ -23,7 +23,7 @@ The current version includes:
 1. Adding Profile Page.
 2. Enable reviews editing.
 3. Adding ReadLater List.
-4. Search reviews by book/author.
+4. Search reviews by book/author/genre.
 5. Discussion Rooms.
 6. ....
 
