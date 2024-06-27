@@ -1,16 +1,12 @@
-# workshop_project_template
+ReadRoad is a web application using Flutter and Firebase for book reviews, which includes:
+Authentication Page:
+•	Designed and implemented user authentication with Firebase Authentication.
+•	Developed a user-friendly interface using Flutter.
+Home Page:
+•	Created a dynamic feed displaying user reviews with real-time updates using Firebase.
+Add Review Page:
+•	Developed a form for users to create and upload reviews.
+•	Integrated the form with Firebase Firestore for data storage.
+Likes and Comments:
+•	Implemented likes and comments for enhanced user interaction.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
