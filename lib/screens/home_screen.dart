@@ -617,7 +617,7 @@ Widget getPostText(String text,int rate){
                                             AssetImage("lib/Icons/${rate}Star.png"),
                                             size:65,color: Colors.black,),
                       ),
-                      subtitle: ReadMoreText( hidden ? "Hidden" :text,textAlign: TextAlign.start, trimLines: 4,trimMode: TrimMode.Line,trimCollapsedText: '...Read more',
+                      subtitle: ReadMoreText( hidden ? "Hidden" :text,textAlign: TextAlign.start, trimLines: 3,trimMode: TrimMode.Line,trimCollapsedText: '...Read more',
                         trimExpandedText: ' Read less',style: TextStyle(fontSize: 20),)
 
                       
