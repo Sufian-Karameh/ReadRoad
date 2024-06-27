@@ -1042,7 +1042,7 @@ Widget getDrawerHead(){
       future: getDbList(sortBy),
        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
     if (snapshot.connectionState == ConnectionState.waiting) {
-      return Text("Loading Feeds...",style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold),);
+      return Text("Loading FFFFeeds...",style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold),);
     }
     if (snapshot.hasError) {
       return Text("Error: ${snapshot.error}"); 
