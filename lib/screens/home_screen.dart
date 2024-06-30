@@ -1,5 +1,6 @@
 //import 'dart:js_interop';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -128,18 +129,18 @@ Widget getCommentWidget (String username,String text,int iconNum){
  Widget getCommentContainer(String postId){
   return Container(
                   margin: const EdgeInsets.only( top: 15,left:80,right:80),
-                  padding:const EdgeInsets.only( top:10.0,bottom: 10,left:80,right:80), 
+                  //padding:const EdgeInsets.only( top:10.0,bottom: 10,left:80,right:80), 
                   decoration: BoxDecoration(
               //color:Color.fromARGB(255, 242, 242, 242),
               borderRadius: BorderRadius.circular(0.0), // Set the radius here
             ),
                   child: Column(
                     children: [
-                      Container(
+                     /* Container(
                         
                         alignment: Alignment.center,
                         child: Text("Comments",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
-                      ),
+                      ),*/
                       Row(
                           children: [
                            CircleAvatar(backgroundImage: AssetImage("lib/Icons/$icon.png"),radius: 30, ),
@@ -314,145 +315,17 @@ Future<int> intitLikes (String postId) async{
     
     // TODO - (Optional) You can use this function to implement the design of a single post.
     return Container(
-      //height: 500,
+      //width: 1380,// MediaQuery.of(context).size.width * 1,
       margin: const EdgeInsets.only( top: 20,left:40,right:40),
       padding:const EdgeInsets.only( top:10.0,bottom: 10,left:100,right:100), 
       decoration: BoxDecoration(
               color: Color.fromARGB(255, 228, 226, 225),
               borderRadius: BorderRadius.circular(20.0), // Set the radius here
             ),
-      child: /*Table(
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: [
-          TableRow(
-            //decoration: BoxDecoration(),
-            children: [
-              Row(
-                
-                  children: [
-                    IconButton(
-                                    onPressed:
-                    ()=>setState(() {
-                          {hidden ? hidden=false : hidden=true;}}),
-                                    icon: getThoughtIcon(hidden)
-                                  ),
-                SizedBox(width:10),
-               ImageIcon(
-                AssetImage("lib/Icons/$num.png"),
-                size: 50),
-                SizedBox(width: 20,),
-                  Expanded(child:  Text(username,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,)),
-                            ]
-                          ),
-
-            ]
-          ),
-          TableRow(
-            children: [
-              Divider(
-                            thickness: 5, 
-                          ),
-            ]
-          ),
-          TableRow(
-            children: [
-               getBookDetails(book, author,  genre),
-            ]
-          ),
-          TableRow(
-            children: [
-              Divider(
-                            thickness: 5, 
-                          ),
-            ]
-
-          ),
-          TableRow(children: [
-            getPostText(text,rate),
-          ]),
-          TableRow(children: [SizedBox(height: 20,)]),
-          TableRow(
-            children:[
-              Padding(
-                  padding: const EdgeInsets.only(left:300,right:150),
-                  child: Row(
-                  
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      
-                      Expanded(
-                        child: ListTile(
-                          leading: // Get the IconData from the snapshot
-      IconButton(
-        onPressed: isUserSignedIn() ? ()=> setState(() {
-          likeUpdated=true;
-          if (likePressed) {likePressed=false;
-          likes1--;
-          }
-          else{ likePressed=true;
-          likes1++;}
-          updateLikes(postId);}) : null,
-            //icon = iconData; // Toggle the value of bookPressed
-            //updateLikes(postId);})
-
-           
-         
-
-icon: !isUserSignedIn() ? Icon(Icons.thumb_up_alt_outlined,size :40): !likeUpdated?
- FutureBuilder<IconData>(
-  //key: UniqueKey(),
-  future: _iconFuture,
-  builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40) ; 
-    } else if (snapshot.hasError) {
-       return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
-    } else {
-      IconData iconData = snapshot.data!;
-    
-        return Icon(
-          iconData, // Use the iconData retrieved from the future
-          size: 40,
-        );}
-      }
- ) : likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40),),
-title: !isUserSignedIn() ? Text("$likes Likes"): 
-FutureBuilder<IconData>(
-  future: _iconFuture,
-  builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return Text("... Likes") ; 
-    } else if (snapshot.hasError) {
-       return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
-    } else {
-  return Text("$likes1 Likes");
-  }}
-                          
-                        ),
-                      ),),
-                      
-                      Expanded(
-                        child: ListTile(
-                          leading:  IconButton(onPressed: isUserSignedIn() ? ()=>setState(() {
-                          {commentOn ? commentOn=false : commentOn=true;}
-                                            }):null, icon:Icon( Icons.comment,size:40)),
-                          title: Text("Comments"),
-                        ),
-                      ),
-                    
-                    
-                  
-                  
-                    ],
-                  ),
-                ),
-            ]
-          )
-        ],
-      )*/
+      child: 
       
       
-      Column(
+      /*Column(
         children: [
           
                 Row(
@@ -568,8 +441,146 @@ FutureBuilder<IconData>(
                      
 
         ],
-      ),
-    );
+      ),*/
+      Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child:getBookDetailsColumn(username, book, author, genre,num,commentOn),
+              ),
+                  Expanded(
+                    flex :3,
+                    child: Container(
+                      alignment:  Alignment.topCenter,
+                      child: Column(
+                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          getPostText(text,rate),
+                      
+                          SizedBox(height: 40,),
+                      Padding(
+                        padding: const EdgeInsets.only(left:150,right:150),
+                        child: Row(
+                        
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            
+                            Expanded(
+                              child: ListTile(
+                                leading: // Get the IconData from the snapshot
+                            IconButton(
+                              onPressed: isUserSignedIn() ? ()=> setState(() {
+                                likeUpdated=true;
+                                if (likePressed) {likePressed=false;
+                                likes1--;
+                                }
+                                else{ likePressed=true;
+                                likes1++;}
+                                updateLikes(postId);}) : null,
+                                  //icon = iconData; // Toggle the value of bookPressed
+                                  //updateLikes(postId);})
+                      
+                                 
+                               
+                      
+                      icon: !isUserSignedIn() ? Icon(Icons.thumb_up_alt_outlined,size :40): !likeUpdated?
+                       FutureBuilder<IconData>(
+                        //key: UniqueKey(),
+                        future: _iconFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40) ; 
+                          } else if (snapshot.hasError) {
+                             return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
+                          } else {
+                            IconData iconData = snapshot.data!;
+                          
+                              return Icon(
+                                iconData, // Use the iconData retrieved from the future
+                                size: 40,
+                              );}
+                            }
+                       ) : likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40),),
+                      title: !isUserSignedIn() ? Text("$likes Likes"): 
+                      FutureBuilder<IconData>(
+                        future: _iconFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Text("... Likes") ; 
+                          } else if (snapshot.hasError) {
+                             return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
+                          } else {
+                        return Text("$likes1 Likes");
+                        }}
+                                
+                              ),
+                            ),),
+                            
+                            Expanded(
+                              child: ListTile(
+                                leading:  IconButton(onPressed: isUserSignedIn() ? ()=>setState(() {
+                                {commentOn ? commentOn=false : commentOn=true;}
+                                                  }):null, icon:Icon( Icons.comment,size:40)),
+                                title: Text("Comments"),
+                              ),
+                            ),
+                          
+                          
+                        
+                        
+                          ],
+                        ),
+                      ),
+                      /*if (commentOn) Column(
+                        children: [
+                          GetComments(postId: postId),
+                          SizedBox(height: 10),
+                           ElevatedButton(onPressed: ()=>setState(() 
+                          {commentOn ? commentOn=false : commentOn=true;}), child: Text("Close"))
+                        ],
+                      )
+                                  
+                        
+                      ,SizedBox(height: 40,),*/
+                        ],
+                      ),
+                    ),
+                  ),
+                   
+            ],
+          ),
+
+          if (commentOn) Row(
+            children: [
+              Expanded( child: SizedBox(width:10)),
+              Expanded(
+                flex: 3,
+                child: Column(
+                          children: [
+                            GetComments(postId: postId),
+                            SizedBox(height: 10),
+                             ElevatedButton(onPressed: ()=>setState(() 
+                            {commentOn ? commentOn=false : commentOn=true;}), child: Text("Close"))
+                          ],
+                        ),
+              )
+                                  
+                        
+                      ,SizedBox(height: 40,),
+                      
+            ],
+          )
+        ],
+      )
+
+        ,
+        
+      );
+
+
+
+    
   }
   Widget getAddedIcon(bool added){
     if (!added){
@@ -607,17 +618,13 @@ Widget getPostText(String text,int rate){
 
                          Expanded(
                     child: ListTile(
-                      leading: ImageIcon(
-                         AssetImage("lib/Icons/post.png"),
-                         size: 50,
-                         color: Colors.black,),
                       title: Container(
                         alignment: Alignment.topLeft,
                         child: ImageIcon(
                                             AssetImage("lib/Icons/${rate}Star.png"),
-                                            size:65,color: Colors.black,),
+                                            size:100,color: Colors.black,),
                       ),
-                      subtitle: ReadMoreText( hidden ? "Hidden" :text,textAlign: TextAlign.start, trimLines: 3,trimMode: TrimMode.Line,trimCollapsedText: '...Read more',
+                      subtitle: ReadMoreText( hidden ? "Hidden" :text,textAlign: TextAlign.start, trimLines: 4,trimMode: TrimMode.Line,trimCollapsedText: '...Read more',
                         trimExpandedText: ' Read less',style: TextStyle(fontSize: 20),)
 
                       
@@ -626,9 +633,7 @@ Widget getPostText(String text,int rate){
                   ),
 
 
-                        SizedBox(width: 65,),
-                         
-                        SizedBox(width: 20,),
+                        
                         
                       ],
 
@@ -696,7 +701,91 @@ Widget getBookDetails(String book, String author, String genre){
                   }), icon:getAddedIcon(addedBook)),
                       ]);
 }
+Widget getBookDetailsColumn( String username, String book, String author, String genre,int num,bool commentOn){
+  return Column( 
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(children: [
+                  CircleAvatar(backgroundImage: AssetImage("lib/Icons/$num.png"),radius: 30, ),
+                  SizedBox(width: 20,),
+                    Expanded(child:  Text(username,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,)),
+                              ]
+                            ),
+                            Divider(
+                              thickness: 5, 
+                            ),
+                    Row(children: [
 
+                      
+
+                  Expanded(
+                    child: ListTile(
+                      leading: ImageIcon(
+                AssetImage("lib/Icons/book.png"),
+                size: 50,color: Colors.black,),
+                      title: Text("Book name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                      subtitle: ReadMoreText(book,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
+                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
+
+                      
+                          
+                    ),
+                  ),
+
+                    ],),
+                    Divider(
+                              thickness: 5, 
+                            ),
+                  Row(
+                    children: [
+Expanded(
+                    child: ListTile(
+                      leading: ImageIcon(
+                AssetImage("lib/Icons/author.png"),
+                size: 50,color: Colors.black,),
+                      title: Text("Author",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                      subtitle: ReadMoreText(author,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
+                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color : Color.fromARGB(255, 129, 114, 91)),) ,
+
+                      
+                          
+                    ),
+                  ),
+                    ],
+                  ),
+                  Divider(
+                              thickness: 5, 
+                            ),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          leading: ImageIcon(
+                                      AssetImage("lib/Icons/genres.png"),
+                                      size: 50,color: Colors.black,),
+                          title: Text("Genre",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                          subtitle: ReadMoreText(genre,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
+                                                         trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
+                      
+                          
+                              
+                        ),
+                      ),
+                    ],
+                  ),
+/*Divider(
+                              thickness: 5, 
+                            ),
+                     IconButton(onPressed: ()=>setState(() {
+                    {addedBook ? addedBook=false : addedBook=true;}
+                  }), icon:getAddedIcon(addedBook)),*/
+                      
+                      //Expanded(child: SizedBox( width: 30,))
+                     // if (commentOn) SizedBox(height: 500),
+
+                      ]);
+}
 
 @override
 void initState() {
@@ -971,9 +1060,15 @@ void initState() {
 
       backgroundColor: Colors.white,
       body: Center(
-        
-        child: getFullFeedWidget(sortBy)),
-    );
+        /*child: MediaQuery.of(context).size.width <= 700 ?
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child:    Container(
+              width: MediaQuery.of(context).size.width * 2, // Example: Width of 2 screens
+              child: getFullFeedWidget(sortBy),
+          )):getFullFeedWidget(sortBy),
+      ));*/
+      child: getFullFeedWidget(sortBy),));
   }
 Widget getDrawerHead(){
   return Container(decoration:BoxDecoration(color: Colors.blueGrey),height: 150,
