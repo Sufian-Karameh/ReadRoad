@@ -117,7 +117,7 @@ Widget getCommentWidget (String username,String text,int iconNum){
              trimMode: TrimMode.Line,
              trimCollapsedText: '...Read more',
              trimExpandedText: ' Read less',
-             style: TextStyle(fontSize: 20),
+             style: TextStyle(fontSize: 17),
            ),
          ),
        ),
@@ -658,8 +658,8 @@ Widget getBookDetails(String book, String author, String genre){
                 AssetImage("lib/Icons/book.png"),
                 size: 50,color: Colors.black,),
                       title: Text("Book name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: ReadMoreText(book,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
-                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
+                      subtitle: Text(book,textAlign: TextAlign.start,overflow:TextOverflow.clip,),
+                      // ReadMoreText(book,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
 
                       
                           
@@ -673,8 +673,8 @@ Widget getBookDetails(String book, String author, String genre){
                 AssetImage("lib/Icons/author.png"),
                 size: 50,color: Colors.black,),
                       title: Text("Author",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: ReadMoreText(author,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
-                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color : Color.fromARGB(255, 129, 114, 91)),) ,
+                      subtitle: Text(author,textAlign: TextAlign.start,overflow:TextOverflow.clip,),
+                      //ReadMoreText(author,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color : Color.fromARGB(255, 129, 114, 91)),) ,
 
                       
                           
@@ -688,8 +688,8 @@ Widget getBookDetails(String book, String author, String genre){
                 AssetImage("lib/Icons/genres.png"),
                 size: 50,color: Colors.black,),
                       title: Text("Genre",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: ReadMoreText(genre,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
-                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
+                      subtitle: Text(genre,textAlign: TextAlign.start,overflow:TextOverflow.clip,),
+                      //ReadMoreText(genre,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
 
                       
                           
@@ -723,9 +723,9 @@ Widget getBookDetailsColumn( String username, String book, String author, String
                       leading: ImageIcon(
                 AssetImage("lib/Icons/book.png"),
                 size: 50,color: Colors.black,),
-                      title: Text("Book name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: ReadMoreText(book,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
-                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
+                      title: Text("Book name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,maxLines: 2,),
+                      subtitle: Text(book,textAlign: TextAlign.start,overflow:TextOverflow.ellipsis,style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),maxLines: 4,),
+                      //ReadMoreText(book,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
 
                       
                           
@@ -743,9 +743,9 @@ Expanded(
                       leading: ImageIcon(
                 AssetImage("lib/Icons/author.png"),
                 size: 50,color: Colors.black,),
-                      title: Text("Author",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: ReadMoreText(author,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
-                                                     trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color : Color.fromARGB(255, 129, 114, 91)),) ,
+                      title: Text("Author",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                      subtitle: Text(author,textAlign: TextAlign.start,overflow:TextOverflow.ellipsis,style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),maxLines: 3,),
+                      //ReadMoreText(author,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color : Color.fromARGB(255, 129, 114, 91)),) ,
 
                       
                           
@@ -764,9 +764,9 @@ Expanded(
                           leading: ImageIcon(
                                       AssetImage("lib/Icons/genres.png"),
                                       size: 50,color: Colors.black,),
-                          title: Text("Genre",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                          subtitle: ReadMoreText(genre,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',
-                                                         trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
+                          title: Text("Genre",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                          subtitle: Text(genre,textAlign: TextAlign.start,overflow:TextOverflow.ellipsis,style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),maxLines: 3,),
+                          //ReadMoreText(genre,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
                       
                           
                               
