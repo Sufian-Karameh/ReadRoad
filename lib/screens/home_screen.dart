@@ -92,38 +92,54 @@ return commentsList;
 }
 
 Widget getCommentWidget (String username,String text,int iconNum){
- return Container(
-  margin: const EdgeInsets.only( top: 15,left :60,right:80),
-                  padding:const EdgeInsets.only( top:10.0,bottom: 10,left:30,right:30), 
-                  decoration: BoxDecoration(
-              color:Color.fromARGB(255, 243, 240, 236),
-              //shape:BoxShape.values.first,
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.circular(10.0), // Set the radius here
-            ),
-   child: Row(
-     children: [
-       Expanded(
-         child: ListTile(
-           leading: CircleAvatar(backgroundImage: AssetImage("lib/Icons/$iconNum.png"),radius: 25, ),
-           title: Text(
-             username,
-             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-           ),
-           subtitle: ReadMoreText(
-             text,
-             textAlign: TextAlign.start,
-             trimLines: 3,
-             trimMode: TrimMode.Line,
-             trimCollapsedText: '...Read more',
-             trimExpandedText: ' Read less',
-             style: TextStyle(fontSize: 17),
-           ),
-         ),
-       ),
-     ],
+ return Row(
+  crossAxisAlignment: CrossAxisAlignment.start,
+   children: [
+    SizedBox(width:30),
+   Padding(
+     padding: const EdgeInsets.only(top:15.0),
+     child: CircleAvatar(backgroundImage: AssetImage("lib/Icons/$iconNum.png"),radius: 25, ),
    ),
-
+   
+     Expanded(
+       child: Container(
+        margin: const EdgeInsets.only( top: 15,left :10,right:80),
+                        padding:const EdgeInsets.only( top:10,bottom: 10,left:10,right:30), 
+                        decoration: BoxDecoration(
+                         // boxShadow: ,
+                    color:Colors.grey.shade300,
+                    //Color.fromARGB(255, 228, 226, 225),
+                    //Color.fromARGB(255, 243, 240, 236),
+                    //shape:BoxShape.values.first,
+                    border: Border.all(color: Color.fromARGB(255, 228, 226, 225)),
+                    borderRadius: BorderRadius.circular(10.0), // Set the radius here
+                  ),
+         child: Row(
+           children: [
+             Expanded(
+               child: ListTile(
+                 //leading: CircleAvatar(backgroundImage: AssetImage("lib/Icons/$iconNum.png"),radius: 25, ),
+                 title: Text(
+                   username,
+                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                 ),
+                 subtitle: ReadMoreText(
+                   text,
+                   textAlign: TextAlign.start,
+                   trimLines: 3,
+                   trimMode: TrimMode.Line,
+                   trimCollapsedText: '...Read more',
+                   trimExpandedText: ' Read less',
+                   style: TextStyle(fontSize: 17),
+                 ),
+               ),
+             ),
+           ],
+         ),
+       
+       ),
+     ),
+   ],
  );
 }
  Widget getCommentContainer(String postId){
@@ -319,7 +335,8 @@ Future<int> intitLikes (String postId) async{
       margin: const EdgeInsets.only( top: 20,left:40,right:40),
       padding:const EdgeInsets.only( top:10.0,bottom: 10,left:100,right:100), 
       decoration: BoxDecoration(
-              color: Color.fromARGB(255, 228, 226, 225),
+              color: Colors.white,
+              //Color.fromARGB(255, 228, 226, 225),
               borderRadius: BorderRadius.circular(20.0), // Set the radius here
             ),
       child: 
@@ -445,6 +462,7 @@ FutureBuilder<IconData>(
       Column(
         children: [
           Row(
+            crossAxisAlignment:CrossAxisAlignment.start ,
             children: [
               Expanded(
                 child:getBookDetailsColumn(username, book, author, genre,num,commentOn),
@@ -625,7 +643,7 @@ Widget getPostText(String text,int rate){
                                             size:100,color: Colors.black,),
                       ),
                       subtitle: ReadMoreText( hidden ? "Hidden" :text,textAlign: TextAlign.start, trimLines: 4,trimMode: TrimMode.Line,trimCollapsedText: '...Read more',
-                        trimExpandedText: ' Read less',style: TextStyle(fontSize: 20),)
+                        trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Colors.black))
 
                       
                           
@@ -712,6 +730,7 @@ Widget getBookDetailsColumn( String username, String book, String author, String
                               ]
                             ),
                             Divider(
+                              color: Color.fromARGB(255, 228, 226, 225),
                               thickness: 5, 
                             ),
                     Row(children: [
@@ -734,6 +753,7 @@ Widget getBookDetailsColumn( String username, String book, String author, String
 
                     ],),
                     Divider(
+                      color: Color.fromARGB(255, 228, 226, 225),
                               thickness: 5, 
                             ),
                   Row(
@@ -754,6 +774,7 @@ Expanded(
                     ],
                   ),
                   Divider(
+                    color: Color.fromARGB(255, 228, 226, 225),
                               thickness: 5, 
                             ),
 
@@ -1058,7 +1079,8 @@ void initState() {
 
 
 
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey.shade300,
+       //Color.fromARGB(255, 228, 226, 225),
       body: Center(
         /*child: MediaQuery.of(context).size.width <= 700 ?
           SingleChildScrollView(
@@ -1105,6 +1127,7 @@ Widget getDrawerHead(){
           title: Text("Search by book",style: TextStyle(fontSize: 25)),
         ),
         Divider(
+          //height: ,
           thickness: 3,
         ),
         ListTile(),
