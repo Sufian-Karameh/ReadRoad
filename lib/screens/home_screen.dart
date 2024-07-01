@@ -42,7 +42,7 @@ class _GetCommentsState extends State<GetComments> {
  Future<List<dynamic>> GetCommentsDb  (String postId)async{
       final FirebaseFirestore db = FirebaseFirestore.instance;
       
-  var data =await db.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).get()!;
+  //var data =await db.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).get()!;
   
 
   //icon = data!.data()!["icon"];
@@ -159,18 +159,20 @@ Widget getCommentWidget (String username,String text,int iconNum){
                       ),*/
                       Row(
                           children: [
-                           CircleAvatar(backgroundImage: AssetImage("lib/Icons/$icon.png"),radius: 30, ),
+                           if (isUserSignedIn())CircleAvatar(backgroundImage: AssetImage("lib/Icons/$icon.png"),radius: 30, ),
+                           if (!isUserSignedIn()) Icon(Icons.person,size: 40),
                 SizedBox(width: 30,),
                             //SizedBox(width:20),
                             Expanded(
                               
                               child: TextField(
                                 controller: comment,
+                                enabled: isUserSignedIn(),
                                 //onChanged: (value) =>{IsCommentEmpty()},
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  labelText: 'Enter yout Comment...',
-                                  prefixIcon: Icon(Icons.comment),
+                                  labelText: isUserSignedIn()? 'Enter yout Comment...' : 'Login to add comments...',
+                                  prefixIcon: Icon(Icons.mode_comment_outlined),
                                       
                               ),
                               maxLines: 1,
@@ -179,7 +181,7 @@ Widget getCommentWidget (String username,String text,int iconNum){
                             ),
                             SizedBox(width: 20,),
                             //IsCommentEmpty() ? null: 
-                        ElevatedButton(onPressed: ()=> setState(() {
+                        ElevatedButton(onPressed: isUserSignedIn()? ()=> setState(() {
                           comments["text"]=comment.text;
                           comments["username"]=FirebaseAuth.instance.currentUser?.displayName ?? "";
                           comments["icon"]=icon;
@@ -187,7 +189,7 @@ Widget getCommentWidget (String username,String text,int iconNum){
                           comments["time"]=DateTime.now().millisecondsSinceEpoch;
                           addComment(comments,postId);
                           comment.clear();
-                        }),
+                        }): null,
                         
                         child: Text("Post!!!")),
                         
@@ -537,9 +539,9 @@ FutureBuilder<IconData>(
                             
                             Expanded(
                               child: ListTile(
-                                leading:  IconButton(onPressed: isUserSignedIn() ? ()=>setState(() {
+                                leading:  IconButton(onPressed:  ()=>setState(() {
                                 {commentOn ? commentOn=false : commentOn=true;}
-                                                  }):null, icon:Icon( Icons.comment,size:40)),
+                                                  }), icon:Icon( Icons.mode_comment_outlined,size:40)),
                                 title: Text("Comments"),
                               ),
                             ),
