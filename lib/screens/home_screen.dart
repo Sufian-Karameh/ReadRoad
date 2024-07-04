@@ -12,7 +12,7 @@ import 'package:readroad_web_application/utils/mock_data.dart';
 import 'package:readroad_web_application/utils/utils.dart';
 import 'package:readmore/readmore.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../firebase/utils.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
@@ -232,7 +232,7 @@ Widget getCommentWidget (String username,String text,int iconNum){
 
 class getBooksRow extends StatefulWidget {
 
-  final VoidCallback onPressed;
+  final Function(String) onPressed;
   bool collapsed=false;
    getBooksRow({
     Key? key,
@@ -314,31 +314,31 @@ class _getBooksRowState extends State<getBooksRow> {
                         ),
                          Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover3.jpg",fit:BoxFit.cover,))),
+                          child: SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover8.jpg",fit:BoxFit.cover,))),
                         ),
                          Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover4.jpg",fit:BoxFit.cover,))),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover9.jpg",fit:BoxFit.cover,))),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover2.jpg",fit:BoxFit.cover,))),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover10.jpg",fit:BoxFit.cover,))),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover1.jpeg",fit:BoxFit.cover,))),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover11.jpg",fit:BoxFit.cover,))),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover7.jpg",fit:BoxFit.cover,))),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover12.jpg",fit:BoxFit.cover,))),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover6.jpg",fit:BoxFit.cover,))),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover13.jpg",fit:BoxFit.cover,))),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover3.jpg",fit:BoxFit.cover,))),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover14.jpg",fit:BoxFit.cover,))),
                         ),
                         
                       ]
@@ -364,6 +364,7 @@ class GetPost extends StatefulWidget {
    final int likes;
    final String genre;
    final String postId;
+   final int bookNum;
 
 
 
@@ -378,6 +379,7 @@ class GetPost extends StatefulWidget {
     required this.likes,
     required this.genre,
     required this.postId,
+    required this.bookNum,
   }) : super(key: key);
 
 
@@ -386,7 +388,7 @@ class GetPost extends StatefulWidget {
 }
 
 class _GetPostState extends State<GetPost> {
-     var postMap={};
+   
   var bookPressed=false;
   var hidden=false;
   var commentOn=false;
@@ -398,7 +400,7 @@ class _GetPostState extends State<GetPost> {
 
   SortType sortBy=SortType.timeDescending;
  var _iconFuture;
- 
+ var _isHovered =false;
 
 
    void updateLikes(String postId)async{
@@ -452,13 +454,13 @@ Future<int> intitLikes (String postId) async{
   }
 }
 
-  Widget getSinglePostWidget(String username,String book, String text,String author,int num,int rate, int likes,String genre,String postId) {
+  Widget getSinglePostWidget(String username,String book, String text,String author,int num,int rate, int likes,String genre,String postId,int bookNum) {
     
     // TODO - (Optional) You can use this function to implement the design of a single post.
     return Container(
       //width: 1380,// MediaQuery.of(context).size.width * 1,
       margin: const EdgeInsets.only( top: 20,left:40,right:40),
-      padding:const EdgeInsets.only( top:10.0,bottom: 10,left:100,right:100), 
+      padding:const EdgeInsets.only( top:40.0,bottom: 40,left:40,right:100), 
       decoration: BoxDecoration(
               color: Colors.white,
               //Color.fromARGB(255, 228, 226, 225),
@@ -590,104 +592,102 @@ FutureBuilder<IconData>(
             crossAxisAlignment:CrossAxisAlignment.start ,
             children: [
               Expanded(
-                child:getBookDetailsColumn(username, book, author, genre,num,commentOn),
+                child:Padding(
+                  padding: const EdgeInsets.only(left:10.0),
+                  child: getBookDetailsColumn(username, book, author, genre,num,commentOn,bookNum),
+                ),
               ),
                   Expanded(
                     flex :3,
-                    child: Container(
-                      alignment:  Alignment.topCenter,
-                      child: Column(
-                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    child: Column(
+                      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(children: [
+                                      CircleAvatar(backgroundImage: AssetImage("lib/Icons/$num.png"),radius: 30, ),
+                                      SizedBox(width: 20,),
+                                        Expanded(child:  Text(username,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,)),
+                            ]
+                          ),
+                          SizedBox(height :20),
+                          
+                        getPostText(text,rate),
+                    
+                        SizedBox(height: 40,),
+                    Padding(
+                      padding: const EdgeInsets.only(left:150,right:150),
+                      child: Row(
+                      
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          getPostText(text,rate),
-                      
-                          SizedBox(height: 40,),
-                      Padding(
-                        padding: const EdgeInsets.only(left:150,right:150),
-                        child: Row(
-                        
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            
-                            Expanded(
-                              child: ListTile(
-                                leading: // Get the IconData from the snapshot
-                            IconButton(
-                              onPressed: isUserSignedIn() ? ()=> setState(() {
-                                likeUpdated=true;
-                                if (likePressed) {likePressed=false;
-                                likes1--;
-                                }
-                                else{ likePressed=true;
-                                likes1++;}
-                                updateLikes(postId);}) : null,
-                                  //icon = iconData; // Toggle the value of bookPressed
-                                  //updateLikes(postId);})
-                      
-                                 
+                          
+                          Expanded(
+                            child: ListTile(
+                              leading: // Get the IconData from the snapshot
+                          IconButton(
+                            onPressed: isUserSignedIn() ? ()=> setState(() {
+                              likeUpdated=true;
+                              if (likePressed) {likePressed=false;
+                              likes1--;
+                              }
+                              else{ likePressed=true;
+                              likes1++;}
+                              updateLikes(postId);}) : null,
                                
-                      
-                      icon: !isUserSignedIn() ? Icon(Icons.thumb_up_alt_outlined,size :40): !likeUpdated?
-                       FutureBuilder<IconData>(
-                        //key: UniqueKey(),
-                        future: _iconFuture,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40) ; 
-                          } else if (snapshot.hasError) {
-                             return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
-                          } else {
-                            IconData iconData = snapshot.data!;
-                          
-                              return Icon(
-                                iconData, // Use the iconData retrieved from the future
-                                size: 40,
-                              );}
-                            }
-                       ) : likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40),),
-                      title: !isUserSignedIn() ? Text("$likes Likes"): 
-                      FutureBuilder<IconData>(
-                        future: _iconFuture,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return Text("... Likes") ; 
-                          } else if (snapshot.hasError) {
-                             return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
-                          } else {
-                        return Text("$likes1 Likes");
-                        }}
-                                
-                              ),
-                            ),),
-                            
-                            Expanded(
-                              child: ListTile(
-                                leading:  IconButton(onPressed:  ()=>setState(() {
-                                {commentOn ? commentOn=false : commentOn=true;}
-                                                  }), icon:Icon( Icons.mode_comment_outlined,size:40)),
-                                title: Text("Comments"),
-                              ),
+                    
+                               
+                             
+                    
+                    icon: !isUserSignedIn() ? Icon(Icons.thumb_up_alt_outlined,size :40): !likeUpdated?
+                     FutureBuilder<IconData>(
+                      //key: UniqueKey(),
+                      future: _iconFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40) ; 
+                        } else if (snapshot.hasError) {
+                           return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
+                        } else {
+                          IconData iconData = snapshot.data!;
+                        
+                            return Icon(
+                              iconData, // Use the iconData retrieved from the future
+                              size: 40,
+                            );}
+                          }
+                     ) : likePressed? Icon(Icons.thumb_up,size:40): Icon(Icons.thumb_up_alt_outlined,size:40),),
+                    title: !isUserSignedIn() ? Text("$likes Likes"): 
+                    FutureBuilder<IconData>(
+                      future: _iconFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Text("... Likes") ; 
+                        } else if (snapshot.hasError) {
+                           return Text('Error: ${snapshot.error}'); // Show error icon if the future throws an error
+                        } else {
+                      return Text("$likes1 Likes");
+                      }}
+                              
                             ),
+                          ),),
                           
-                          
+                          Expanded(
+                            child: ListTile(
+                              leading:  IconButton(onPressed:  ()=>setState(() {
+                              {commentOn ? commentOn=false : commentOn=true;}
+                                                }), icon:Icon( Icons.mode_comment_outlined,size:40)),
+                              title: Text("Comments"),
+                            ),
+                          ),
                         
                         
-                          ],
-                        ),
-                      ),
-                      /*if (commentOn) Column(
-                        children: [
-                          GetComments(postId: postId),
-                          SizedBox(height: 10),
-                           ElevatedButton(onPressed: ()=>setState(() 
-                          {commentOn ? commentOn=false : commentOn=true;}), child: Text("Close"))
-                        ],
-                      )
-                                  
-                        
-                      ,SizedBox(height: 40,),*/
+                      
+                      
                         ],
                       ),
+                    ),
+                    
+                      ],
                     ),
                   ),
                    
@@ -754,101 +754,68 @@ FutureBuilder<IconData>(
 
  
 Widget getPostText(String text,int rate){
-  return  Row(
-                      children: [
-                        SizedBox(width: 55,),
+  return  Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+                              padding: const EdgeInsets.only(left:55,bottom: 10),
+                              child: RatingBarIndicator(
+                                          rating: rate as double,
+                                          itemSize: 30,
+                                          direction: Axis.horizontal,
+                                          //allowHalfRating: false,
+                                          itemCount: 5,
+                                         // itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: Colors.black,
+                                            //Color.fromARGB(255, 129, 114, 91),
+                                            
+                                          ),
+                                        ),
+                            ),
 
-
-                         Expanded(
-                    child: ListTile(
-                      title: Container(
-                        alignment: Alignment.topLeft,
-                        child: ImageIcon(
-                                            AssetImage("lib/Icons/${rate}Star.png"),
-                                            size:100,color: Colors.black,),
-                      ),
-                      subtitle: ReadMoreText( hidden ? "Hidden" :text,textAlign: TextAlign.start, trimLines: 4,trimMode: TrimMode.Line,trimCollapsedText: '...Read more',
-                        trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Colors.black))
-
-                      
-                          
-                    ),
-                  ),
-
-
-                        
-                        
-                      ],
-
+      Row(
+                          children: [
+                            SizedBox(width: 45,),
       
-
-
-
-                    );
+      
+                             Expanded(
+                        child: ListTile(
+                         /* title: Container(
+                            alignment: Alignment.topLeft,
+                            child: ImageIcon(
+                                                AssetImage("lib/Icons/${rate}Star.png"),
+                                                size:100,color: Colors.black,),
+                          ),*/
+                          subtitle: ReadMoreText( hidden ? "Hidden" :text,textAlign: TextAlign.start, trimLines: 4,trimMode: TrimMode.Line,trimCollapsedText: '...Read more',
+                            trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Colors.black))
+      
+                          
+                              
+                        ),
+                      ),
+      
+      
+                            
+                            
+                          ],
+      
+          
+      
+      
+      
+                        ),
+    ],
+  );
 }
 
-Widget getBookDetails(String book, String author, String genre){
-  return Row( 
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-
-                    
-                  SizedBox(width:55),
-
-                  Expanded(
-                    child: ListTile(
-                      leading: ImageIcon(
-                AssetImage("lib/Icons/book.png"),
-                size: 50,color: Colors.black,),
-                      title: Text("Book name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: Text(book,textAlign: TextAlign.start,overflow:TextOverflow.clip,),
-                      // ReadMoreText(book,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
-
-                      
-                          
-                    ),
-                  ),
-
-
-                  Expanded(
-                    child: ListTile(
-                      leading: ImageIcon(
-                AssetImage("lib/Icons/author.png"),
-                size: 50,color: Colors.black,),
-                      title: Text("Author",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: Text(author,textAlign: TextAlign.start,overflow:TextOverflow.clip,),
-                      //ReadMoreText(author,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color : Color.fromARGB(255, 129, 114, 91)),) ,
-
-                      
-                          
-                    ),
-                  ),
-
-
-                  Expanded(
-                    child: ListTile(
-                      leading: ImageIcon(
-                AssetImage("lib/Icons/genres.png"),
-                size: 50,color: Colors.black,),
-                      title: Text("Genre",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                      subtitle: Text(genre,textAlign: TextAlign.start,overflow:TextOverflow.clip,),
-                      //ReadMoreText(genre,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
-
-                      
-                          
-                    ),
-                  ),
-
-                     IconButton(onPressed: ()=>setState(() {
-                    {addedBook ? addedBook=false : addedBook=true;}
-                  }), icon:getAddedIcon(addedBook)),
-                      ]);
-}
-Widget getBookDetailsColumn( String username, String book, String author, String genre,int num,bool commentOn){
+Widget getBookDetailsColumn( String username, String book, String author, String genre,int num,bool commentOn,int bookNum){
   return Column( 
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(children: [
+                    /*Row(children: [
                   CircleAvatar(backgroundImage: AssetImage("lib/Icons/$num.png"),radius: 30, ),
                   SizedBox(width: 20,),
                     Expanded(child:  Text(username,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,)),
@@ -857,17 +824,37 @@ Widget getBookDetailsColumn( String username, String book, String author, String
                             Divider(
                               color: Color.fromARGB(255, 228, 226, 225),
                               thickness: 5, 
+                            ),*/
+                            MouseRegion(
+                              onEnter: (_) {
+            setState(() {
+              _isHovered = true;
+            });
+          },
+          onExit: (_) {
+            setState(() {
+              _isHovered = false;
+            });
+          },
+                              child: Stack(
+                                children:[ Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(height: 250,width: 180,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover${bookNum}.jpg",fit:BoxFit.fill,))),
+                                ),
+                                if (_isHovered) Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(height: 250,width: 180,child: Container(color: Colors.black.withOpacity(0.5),child: Icon(Icons.add_comment_outlined,color: Colors.white,),)),
+                                ),
+                                ]
+                              ),
                             ),
                     Row(children: [
-
-                      
-
                   Expanded(
                     child: ListTile(
                       leading: ImageIcon(
                 AssetImage("lib/Icons/book.png"),
-                size: 50,color: Colors.black,),
-                      title: Text("Book name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,maxLines: 2,),
+                size: 30,color: Colors.black,),
+                      //title: Text("Book name",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,maxLines: 2,),
                       subtitle: Text(book,textAlign: TextAlign.start,overflow:TextOverflow.ellipsis,style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),maxLines: 4,),
                       //ReadMoreText(book,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
 
@@ -877,18 +864,18 @@ Widget getBookDetailsColumn( String username, String book, String author, String
                   ),
 
                     ],),
-                    Divider(
+                   /* Divider(
                       color: Color.fromARGB(255, 228, 226, 225),
                               thickness: 5, 
-                            ),
+                            ),*/
                   Row(
                     children: [
 Expanded(
                     child: ListTile(
                       leading: ImageIcon(
                 AssetImage("lib/Icons/author.png"),
-                size: 50,color: Colors.black,),
-                      title: Text("Author",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                size: 30,color: Colors.black,),
+                     // title: Text("Author",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,maxLines: 1,),
                       subtitle: Text(author,textAlign: TextAlign.start,overflow:TextOverflow.ellipsis,style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),maxLines: 3,),
                       //ReadMoreText(author,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color : Color.fromARGB(255, 129, 114, 91)),) ,
 
@@ -898,10 +885,10 @@ Expanded(
                   ),
                     ],
                   ),
-                  Divider(
+                 /* Divider(
                     color: Color.fromARGB(255, 228, 226, 225),
                               thickness: 5, 
-                            ),
+                            ),*/
 
                   Row(
                     children: [
@@ -909,8 +896,8 @@ Expanded(
                         child: ListTile(
                           leading: ImageIcon(
                                       AssetImage("lib/Icons/genres.png"),
-                                      size: 50,color: Colors.black,),
-                          title: Text("Genre",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,maxLines: 1,),
+                                      size: 30,color: Colors.black,),
+                         // title: Text("Genre",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,maxLines: 1,),
                           subtitle: Text(genre,textAlign: TextAlign.start,overflow:TextOverflow.ellipsis,style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),maxLines: 3,),
                           //ReadMoreText(genre,textAlign: TextAlign.start, trimLength: 60,trimMode: TrimMode.Length,trimCollapsedText: '...Read more',trimExpandedText: ' Read less',style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 129, 114, 91)),) ,
                       
@@ -944,7 +931,7 @@ void initState() {
   }
 @override
   Widget build(BuildContext context) {
-    return getSinglePostWidget(widget.username, widget.book, widget.text, widget.author, widget.num, widget.rate, widget.likes, widget.genre, widget.postId);
+    return getSinglePostWidget(widget.username, widget.book, widget.text, widget.author, widget.num, widget.rate, widget.likes, widget.genre, widget.postId,widget.bookNum);
   }
 }
 
@@ -986,7 +973,7 @@ enum SortType {
 
 class _HomeScreenState extends State<HomeScreen> {
   
-  var postMap={};
+ 
   var bookPressed=false;
   var hidden=false;
   var commentOn=false;
@@ -1000,12 +987,13 @@ class _HomeScreenState extends State<HomeScreen> {
    var selectedSort;
   List sortList=['Top Rated Books','Latest','Top Liked Books'];
   var collapsed =false;
+  var selectedBook ="";
 
 
 
-void set (){
+void setBook (String book){
   setState(() {
-    
+    selectedBook=book;
   });
 }
 Future<List> getDbList (SortType sortBy)async{
@@ -1018,12 +1006,17 @@ var docList=[];
   (querySnapshot) {
     
     for (var docSnapshot in querySnapshot.docs) {
+      if (selectedBook =="" ){
+        docList.add({"postId":docSnapshot!.id!,"postData": docSnapshot!.data()});
+      }
+      else if ( docSnapshot!.data()['book']==selectedBook){
       docList.add({"postId":docSnapshot!.id!,"postData": docSnapshot!.data()});
-      postMap[docSnapshot!.id!]=docSnapshot!.data();
+      }
+      
 
-      i++;
+      //i++;
 
-      //print('${docSnapshot!.id!} => ${docSnapshot!.data()}');
+      print('${docSnapshot!.id!} => ${docSnapshot!.data()}');
     }
   },
   onError: (e) => print("Error completing: $e"),
@@ -1318,9 +1311,10 @@ Widget getDrawerHead(){
  
    return  Column(
        children: [
-        getBooksRow(onPressed: set,),
+        getBooksRow(onPressed: (book){setBook(book);},),
          Expanded(
            child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
              children: [
               /*Padding(
                         padding: const EdgeInsets.all(20.0),
@@ -1338,6 +1332,7 @@ Widget getDrawerHead(){
                   }
                  
                   List docList = snapshot.data!;
+                  if (docList!.isEmpty) return Center(child: Text("There is no reviews for this book yet...",style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),);
                   return ListView.builder(
                     // physics: const AlwaysScrollableScrollPhysics(),
                      //physics: const NeverScrollableScrollPhysics(),
@@ -1348,7 +1343,7 @@ Widget getDrawerHead(){
                     itemBuilder: (BuildContext context, int index) {
                       
                         return //Text("hhhhhhhhhh",style: TextStyle(fontSize: 500),);
-                        GetPost(username: docList[index]["postData"]['username'],book: docList[index]["postData"]['book']!,text:  docList[index]["postData"]['text']!,author: docList[index]["postData"]['author']!,num: docList[index]["postData"]["icon"],rate: docList[index]["postData"]['rate'],likes: docList[index]["postData"]['likes'],genre: docList[index]["postData"]['genre'],postId: docList[index]["postId"]);
+                        GetPost(username: docList[index]["postData"]['username'],book: docList[index]["postData"]['book']!,text:  docList[index]["postData"]['text']!,author: docList[index]["postData"]['author']!,num: docList[index]["postData"]["icon"],rate: docList[index]["postData"]['rate'],likes: docList[index]["postData"]['likes'],genre: docList[index]["postData"]['genre'],postId: docList[index]["postId"],bookNum: docList[index]["postData"]['bookNum'],);
                     },
                   );
                    },

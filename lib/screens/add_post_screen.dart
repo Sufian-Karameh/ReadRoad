@@ -25,8 +25,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
   TextEditingController review = TextEditingController();
   var selected=false;
   var selectedGenres ;
+  var selected1=false;
   double rate =-1;
-
+   var bookList;
+   var selectedBook;
  
 
 
@@ -40,7 +42,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 129, 114, 91),
+        backgroundColor: Color.fromARGB(255, 170, 176, 152),
         // TODO - You can change the title.
         title: Center(child: Text("Share Review",style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold),)),
       ),
@@ -62,8 +64,33 @@ class _AddPostScreenState extends State<AddPostScreen> {
   }
 
   bool isEmpty (){
-    return book.text.isEmpty||author.text.isEmpty||review.text.isEmpty ||selected==false|| rate==-1;
+    return book.text.isEmpty||author.text.isEmpty||review.text.isEmpty ||selected==false|| selected1==false||  rate==-1;
   }
+
+@override
+void initState(){
+  super.initState(); 
+     // Always call super.initState() to ensure any parent class initialization logic is executed
+     bookList = getDbList();
+}
+  Future<List> getDbList ()async{
+  final FirebaseFirestore db = FirebaseFirestore.instance;
+var docList=[];
+    
+    
+    int i =0;
+    await db.collection("Books").get().then(
+  (querySnapshot) {
+    
+    for (var docSnapshot in querySnapshot.docs) {
+      
+        docList.add({"BookName":docSnapshot!.id!,"BookData": docSnapshot!.data()});
+      //i++;
+
+      print('${docSnapshot!.id!} => ${docSnapshot!.data()}');
+    }
+  },);
+  return docList;}
   
   Widget getPageWidgets() {
     // TODO - Replace the placeholder with implementation
@@ -128,7 +155,43 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 //alignment: Alignment.topLeft,
                 //width:20,
                // constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width *.25),
-                
+                Container(
+                  constraints: BoxConstraints(maxWidth: 280),
+                  child: FutureBuilder(
+                      future: bookList,
+                       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return DropdownButton(items: [], onChanged:(value) {
+                        value=4;
+                      },hint: Text("Pick the Book to Review"),alignment: Alignment.center,underline: Container(
+                                height: 2,
+                                color: Color.fromARGB(255, 129, 114, 91),
+                              ));
+                    }
+                    if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}"); 
+                    }
+                   
+                    List docList = snapshot.data!;
+                    return  
+                  ListTile(
+                    leading:Icon(Icons.menu_book,color: Color.fromARGB(255, 129, 114, 91),) ,
+                      title: DropdownButton(items: docList!.map((e)=>DropdownMenuItem(value: e,child: Text(e["BookName"],style:TextStyle(color: Color.fromARGB(255, 129, 114, 91))))).toList(), onChanged: (val){
+                      setState(() {
+                        selected1=true;
+                        selectedBook=val;
+                        var map=val as Map;
+                        doc["book"]= map["BookName"] as String;
+                        
+                      });
+                                      } ,value: selectedBook,hint: Text("Pick the Book to Review"),alignment: Alignment.center,dropdownColor: Colors.white ,  underline: Container(
+                                    height: 2,
+                                    color: Color.fromARGB(255, 129, 114, 91),
+                                  ) ,focusColor: Colors.white,),
+                    );}
+                  ),
+                ),
+/*
                 DropdownButton(items: genres!.map((e)=>DropdownMenuItem(value: e,child: Container(alignment:Alignment.center,child:  Text("$e" ,style:TextStyle(color: Color.fromARGB(255, 129, 114, 91)),)))).toList(), onChanged: (val){
                   setState(() {
                     selected=true;
@@ -138,7 +201,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 } ,value: selectedGenres,hint: Text("Pick the book's genre"),alignment: Alignment.center,dropdownColor: Colors.white ,  underline: Container(
               height: 2,
               color: Color.fromARGB(255, 129, 114, 91),
-            ) ,),
+            ),focusColor: Colors.white,),*/
               
           //Expanded(child: ElevatedButton(onPressed: null, style: ElevatedButton.styleFrom(minimumSize: Size(50, 50),),child: Text("Submit"),)),
       
