@@ -230,6 +230,129 @@ Widget getCommentWidget (String username,String text,int iconNum){
   }
 }
 
+class getBooksRow extends StatefulWidget {
+
+  final VoidCallback onPressed;
+  bool collapsed=false;
+   getBooksRow({
+    Key? key,
+    required  this.onPressed,
+    //required this.collapsed,
+   
+  }) : super(key: key);
+
+  @override
+  State<getBooksRow> createState() => _getBooksRowState();
+}
+
+class _getBooksRowState extends State<getBooksRow> {
+  //var collapsed=widget.isCollapsed;
+  final ScrollController _horizontalScrollController = ScrollController();
+
+
+  void _scrollRowRight() {
+    _horizontalScrollController.animateTo(
+      _horizontalScrollController.offset + 216,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _scrollRowLeft() {
+    _horizontalScrollController.animateTo(
+      _horizontalScrollController.offset - 216,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+         children: [
+          
+         // IconButton(onPressed: widget.onPressed,icon: Icon(Icons.upgrade),),
+         IconButton(onPressed:()=>setState(() {
+                            {widget.collapsed ? widget.collapsed=false : widget.collapsed=true;
+                            }}) , icon: widget.collapsed? Icon(Icons.keyboard_arrow_down,size: 30,):Icon(Icons.keyboard_arrow_up,size:30),tooltip: widget.collapsed? "Show Books' Bar" : "Hide Books' Bar",),
+         
+           if (!widget.collapsed)Row(
+              children: [
+                IconButton(onPressed: _scrollRowLeft, icon: Icon(Icons.chevron_left_sharp),iconSize: 50,),
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: _horizontalScrollController,
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children:[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover1.jpeg",fit:BoxFit.cover,))),
+                        ),
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover2.jpg",fit:BoxFit.cover,))),
+                        ),
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover3.jpg",fit:BoxFit.cover,))),
+                        ),
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover4.jpg",fit:BoxFit.cover,))),
+                        ),
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover5.jpg",fit:BoxFit.cover,))),
+                        ),
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover6.jpg",fit:BoxFit.cover,))),
+                        ),
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover7.jpg",fit:BoxFit.cover,))),
+                        ),
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover3.jpg",fit:BoxFit.cover,))),
+                        ),
+                         Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover4.jpg",fit:BoxFit.cover,))),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover2.jpg",fit:BoxFit.cover,))),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover1.jpeg",fit:BoxFit.cover,))),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover7.jpg",fit:BoxFit.cover,))),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover6.jpg",fit:BoxFit.cover,))),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child:SizedBox(height: 150,width: 100,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover3.jpg",fit:BoxFit.cover,))),
+                        ),
+                        
+                      ]
+                    ),
+                  ),
+                ),
+                IconButton(onPressed: _scrollRowRight, icon: Icon(Icons.chevron_right_sharp),iconSize: 50,),
+              ],
+            ),
+         ],
+       );
+  }
+}
+
 class GetPost extends StatefulWidget {
 
   final String username;
@@ -873,11 +996,18 @@ class _HomeScreenState extends State<HomeScreen> {
   var icon;
   SortType sortBy=SortType.timeDescending;
   IconData postLikeIcon=Icons.thumb_up;
-   var dbList;
+  var dbList;
+   var selectedSort;
+  List sortList=['Top Rated Books','Latest','Top Liked Books'];
+  var collapsed =false;
 
 
 
-
+void set (){
+  setState(() {
+    
+  });
+}
 Future<List> getDbList (SortType sortBy)async{
   final FirebaseFirestore db = FirebaseFirestore.instance;
 var docList=[];
@@ -893,7 +1023,7 @@ var docList=[];
 
       i++;
 
-      print('${docSnapshot!.id!} => ${docSnapshot!.data()}');
+      //print('${docSnapshot!.id!} => ${docSnapshot!.data()}');
     }
   },
   onError: (e) => print("Error completing: $e"),
@@ -929,6 +1059,7 @@ return docList;
 
 // Controllers
   final ScrollController _scrollController= ScrollController();
+  
 /*
   @override
   void initState() {
@@ -943,6 +1074,7 @@ void updateIcon()async{
   var data =await db.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).get()!;
   icon = data!.data()!["icon"];
 }
+ 
 @override
 void initState() {
     super.initState(); 
@@ -956,88 +1088,109 @@ void initState() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 150,
-        backgroundColor: Color.fromARGB(255, 129, 114, 91),
-        title: Column(
-              children: [
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                  children: [TextSpan(text:"Read",style: TextStyle(fontSize: 40,color:Colors.black,fontWeight: FontWeight.bold) ),
-                             TextSpan(text:"Road",style: TextStyle(fontSize: 40,color:Colors.white,fontWeight: FontWeight.bold) ),
-                             TextSpan(text:"!!",style: TextStyle(fontSize: 40,color:Colors.black,fontWeight: FontWeight.bold) )
-                  ],)),
-                   SizedBox(height: 10,),
-                  if (isUserSignedIn()) 
-                  Text('Welcome, ${FirebaseAuth.instance.currentUser?.displayName}'),
-                  if (!isUserSignedIn()) 
-                  Text ("Login to interact!!"),
-                SizedBox(height: 10,),
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        
+        toolbarHeight: 70,
+        backgroundColor: Color.fromARGB(255, 170, 176, 152),
+        //Color.fromARGB(255, 129, 114, 91),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+                  children: [
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                      children: [TextSpan(text:"Read",style: TextStyle(fontSize: 30,color:Colors.black,fontWeight: FontWeight.bold) ),
+                                 TextSpan(text:"Road",style: TextStyle(fontSize: 30,color:Colors.white,fontWeight: FontWeight.bold) ),
+                                 TextSpan(text:"!!",style: TextStyle(fontSize: 30,color:Colors.black,fontWeight: FontWeight.bold) )
+                      ],)),
                        
-                    
-                              ElevatedButton(
-                                style:ElevatedButton.styleFrom(
-                            overlayColor: Colors.black,
-                           
-                          ) ,
-                                onPressed:()=> setState(() {
-                                  sortBy = SortType.topRated;
-                                }),
-                                child: Text(
-                                  'Top Rated Books',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 129, 114, 91),
-                                    fontSize: 25,
-                                  ),
-                                ),
-                              ),
-
-                               ElevatedButton(
-                          style:ElevatedButton.styleFrom(
-                            overlayColor: Colors.black,
-                           
-                          ) ,
-                           onPressed:()=> setState(() {
-                                  sortBy = SortType.timeDescending;
-                                }),
-                          child: Text(
-                            'Latest',
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 129, 114, 91),
-                              fontSize: 25,
-                            ),
-                          ),
-                        ),
-                    
-                    
-                              ElevatedButton(
-                                style:ElevatedButton.styleFrom(
-                            overlayColor: Colors.black,
-                           
-                          ) ,
-                                onPressed:()=> setState(() {
-                                  sortBy = SortType.popularityDescending;
-                                }),
-                                child: Text(
-                                  'Top liked Reviews',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 129, 114, 91),
-                                    fontSize: 25,
-                                    
-                                  ),
-                                ),
-                              ),
-                    
+                      
+            
+                      /*Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             
-                    ],),
-                  )
-              ],
-            ),
+                           
+                        
+                                  ElevatedButton(
+                                    style:ElevatedButton.styleFrom(
+                                overlayColor: Colors.black,
+                               
+                              ) ,
+                                    onPressed:()=> setState(() {
+                                      sortBy = SortType.topRated;
+                                    }),
+                                    child: Text(
+                                      'Top Rated Books',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 129, 114, 91),
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                  ),
+            
+                                   ElevatedButton(
+                              style:ElevatedButton.styleFrom(
+                                overlayColor: Colors.black,
+                               
+                              ) ,
+                               onPressed:()=> setState(() {
+                                      sortBy = SortType.timeDescending;
+                                    }),
+                              child: Text(
+                                'Latest',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 129, 114, 91),
+                                  fontSize: 25,
+                                ),
+                              ),
+                            ),
+                        
+                        
+                                  ElevatedButton(
+                                    style:ElevatedButton.styleFrom(
+                                overlayColor: Colors.black,
+                               
+                              ) ,
+                                    onPressed:()=> setState(() {
+                                      sortBy = SortType.popularityDescending;
+                                    }),
+                                    child: Text(
+                                      'Top liked Reviews',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 129, 114, 91),
+                                        fontSize: 25,
+                                        
+                                      ),
+                                    ),
+                                  ),
+                        
+                                
+                        ],),
+                      )*/
+                  ],
+                ),
+                if (isUserSignedIn()) 
+                      Text('Welcome, ${FirebaseAuth.instance.currentUser?.displayName}' ,style :TextStyle(fontSize: 30,color:Colors.black,fontWeight: FontWeight.bold)),
+                      if (!isUserSignedIn()) 
+                      Text ("Login to interact!!",style:TextStyle(fontSize: 30,color:Colors.black,fontWeight: FontWeight.bold)),
+                    
+             
+                DropdownButton(items: sortList!.map((e)=>DropdownMenuItem(value: e,child: Container(alignment:Alignment.center,child:  Text("$e" ,)))).toList(), onChanged: (val){
+                      setState(() {
+                        selectedSort=val;
+                        if  (val =="Top Rated Books") sortBy=SortType.topRated;
+                        if (val== "Latest") sortBy =SortType.timeDescending;
+                        if (val =="Top Liked Reviews") sortBy=SortType.popularityDescending;
+                        
+                      });
+                    } ,value: selectedSort,hint: Text("SortBy",style:TextStyle(color: Colors.black,fontSize:20)),alignment: Alignment.center,dropdownColor: Colors.white ,  underline: Container(
+                  height: 2,
+                  color: Color.fromARGB(255, 170, 176, 152),
+                ) , focusColor: Color.fromARGB(255, 170, 176, 152),borderRadius: BorderRadius.circular(4),style:TextStyle(color: Colors.black,fontSize: 20) ,),
+          ],
+        ),
             centerTitle: true,
         actions: [        
            IconButton(
@@ -1163,37 +1316,55 @@ Widget getDrawerHead(){
     // If you want, you can use the `getSinglePostWidget()` to add the design a single post.
 
  
-   return  FutureBuilder(
-      future: getDbList(sortBy),
-       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return Text("Loading Feeds...",style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold),);
-    }
-    if (snapshot.hasError) {
-      return Text("Error: ${snapshot.error}"); 
-    }
-   
-    List docList = snapshot.data!;
-    return ListView.builder(
-      // physics: const AlwaysScrollableScrollPhysics(),
-       //physics: const NeverScrollableScrollPhysics(),
-       //keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
-       controller: _scrollController,
-      itemCount: docList.length,
-      //key: UniqueKey(),
-      itemBuilder: (BuildContext context, int index) {
-        
-          return //Text("hhhhhhhhhh",style: TextStyle(fontSize: 500),);
-          GetPost(username: docList[index]["postData"]['username'],book: docList[index]["postData"]['book']!,text:  docList[index]["postData"]['text']!,author: docList[index]["postData"]['author']!,num: docList[index]["postData"]["icon"],rate: docList[index]["postData"]['rate'],likes: docList[index]["postData"]['likes'],genre: docList[index]["postData"]['genre'],postId: docList[index]["postId"]);
-      },
-    );
-  },
-      
-      
-      
-        
-        
-        );
+   return  Column(
+       children: [
+        getBooksRow(onPressed: set,),
+         Expanded(
+           child: Row(
+             children: [
+              /*Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child:SizedBox(height: 300,width: 200,child: ClipRRect(  borderRadius: BorderRadius.circular(4.0),child: Image.asset("lib/Icons/cover1.jpeg",fit:BoxFit.cover,))),
+                      ),*/
+               Expanded(
+                 child: FutureBuilder(
+                    future: getDbList(sortBy),
+                     builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: Text("Loading Feeds...",style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold),));
+                  }
+                  if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}"); 
+                  }
+                 
+                  List docList = snapshot.data!;
+                  return ListView.builder(
+                    // physics: const AlwaysScrollableScrollPhysics(),
+                     //physics: const NeverScrollableScrollPhysics(),
+                     //keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
+                     controller: _scrollController,
+                    itemCount: docList.length,
+                    //key: UniqueKey(),
+                    itemBuilder: (BuildContext context, int index) {
+                      
+                        return //Text("hhhhhhhhhh",style: TextStyle(fontSize: 500),);
+                        GetPost(username: docList[index]["postData"]['username'],book: docList[index]["postData"]['book']!,text:  docList[index]["postData"]['text']!,author: docList[index]["postData"]['author']!,num: docList[index]["postData"]["icon"],rate: docList[index]["postData"]['rate'],likes: docList[index]["postData"]['likes'],genre: docList[index]["postData"]['genre'],postId: docList[index]["postId"]);
+                    },
+                  );
+                   },
+                    
+                    
+                    
+                      
+                      
+                      ),
+               ),
+             ],
+           ),
+         ),
+       ],
+     
+   );
 
   }
 
