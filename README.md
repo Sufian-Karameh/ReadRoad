@@ -19,13 +19,13 @@ The current version includes:
 •	Implemented likes and comments for enhanced user interaction.
 
 # Features on Way:
-
-1. Adding Profile Page.
-2. Enable reviews editing.
-3. Adding ReadLater List.
-4. Search reviews by book/author/genre.
-5. Discussion Rooms.
-6. ....
+1. Fetching the books using GoogleBooks API
+2. Adding Profile Page.
+3. Enable reviews editing.
+4. Adding ReadLater List.
+5. Search reviews by book/author/genre.
+6. Discussion Rooms.
+7. ....
 
 
 
