@@ -20,12 +20,12 @@ The current version includes:
 
 # Features on Way:
 1. Fetching the books using GoogleBooks API
-2. Adding Profile Page.
-3. Enable reviews editing.
-4. Adding ReadLater List.
-5. Search reviews by book/author/genre.
-6. Discussion Rooms.
-7. ....
-
+2. Ceate a Responxive UI 
+3. Adding Profile Page.
+4. Enable reviews editing.
+5. Adding ReadLater List.
+6. Search reviews by book/author/genre.
+7. Discussion Rooms.
+8. ....
 
 
