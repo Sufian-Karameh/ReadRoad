@@ -2,7 +2,7 @@
 
 ReadRoad is a web application using Flutter and Firebase for sharing  book reviews.
 
-You may visit here : <https://readroadsufian.web.app/>
+You may visit the curret version here : <https://readroadsufian.web.app/>
 
 The current version includes:
 ### 1. Authentication Page:
